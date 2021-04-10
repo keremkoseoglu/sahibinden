@@ -3,7 +3,7 @@ import setuptools
 
 setuptools.setup(
     name="sahibinden-keremkoseoglu",
-    version="0.0.1",
+    version="0.0.2",
     author="Kerem Koseoglu",
     author_email="kerem@keremkoseoglu.com",
     description="sahibinden.com Web spider",

@@ -1,4 +1,5 @@
 """ Search module """
+import time
 from luta.crawler import Crawler
 from sahibinden.search_result import SearchResult
 
@@ -6,8 +7,9 @@ _HOST = "http://www.sahibinden.com"
 
 class Search():
     """ Search class """
-    def __init__(self, url: str):
+    def __init__(self, url: str, post_sleep: int = 0):
         self._url = url
+        self._post_sleep = post_sleep
         self._html = ""
         self._prices = []
         self._search()
@@ -31,6 +33,8 @@ class Search():
         url = self._url
         while True:
             crw = Crawler(url)
+            if self._post_sleep > 0:
+                time.sleep(self._post_sleep)
 
             prices = crw.get_values_between('<td class="searchResultsPriceValue">', '</div>')
             for price in prices:
