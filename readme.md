@@ -24,3 +24,13 @@ for price in search.result.prices:
     print(str(price))
 print(search.result.price_median)
 ```
+
+Search also takes a value called post_sleep. If sahibinden.com receives too many requests in a row, it blocks your further requests. To prevent that, you can pass a post_sleep value (in seconds) to wait between each HTTP request.
+
+```
+from sahibinden.search import Search
+search = Search("https://www.sahibinden.com/arazi-suv-pickup-nissan-qashqai/benzin/manuel?a277_max=2013&a277_min=2013&a276_min=100000&a276_max=200000", post_sleep=10)
+for price in search.result.prices:
+    print(str(price))
+print(search.result.price_median)
+```
