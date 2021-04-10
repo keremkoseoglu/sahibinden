@@ -33,8 +33,6 @@ class Search():
         url = self._url
         while True:
             crw = Crawler(url)
-            if self._post_sleep > 0:
-                time.sleep(self._post_sleep)
 
             prices = crw.get_values_between('<td class="searchResultsPriceValue">', '</div>')
             for price in prices:
@@ -45,3 +43,6 @@ class Search():
             if next_url == "":
                 return
             url = _HOST + next_url
+
+            if self._post_sleep > 0:
+                time.sleep(self._post_sleep)
