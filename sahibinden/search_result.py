@@ -38,6 +38,8 @@ class SearchResult():
         if not self._price_med_calculated:
             if self._price_count > 0:
                 pos = int(self._price_count / 2)
+                if pos > 0:
+                    pos -= 1 # Pesimistik
                 self._price_med = self._prices[pos]
             self._price_med_calculated = True
         return self._price_med
