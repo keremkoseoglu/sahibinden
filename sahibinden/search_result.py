@@ -19,6 +19,7 @@ class SearchResult():
 
     @property
     def prices(self) -> List[float]:
+        """ Returns all prices """
         return self._prices
 
 

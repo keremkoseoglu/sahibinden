@@ -1,48 +1,31 @@
 """ Search module """
 import time
-from luta.crawler import Crawler
+from luta.crawler import Crawler # pylint: disable=E0401
 from sahibinden.search_result import SearchResult
-
-_HOST = "http://www.sahibinden.com"
+from sahibinden.toolkit import extract_crawler_prices, HOST, SearchInput
 
 class Search():
     """ Search class """
-    def __init__(self, url: str, post_sleep: int = 0):
-        self._url = url
-        self._post_sleep = post_sleep
+    def __init__(self, search_input: SearchInput):
+        self._input = search_input
         self._html = ""
         self._prices = []
         self._search()
         self.result = SearchResult(self._prices)
 
-    @staticmethod
-    def _parse_price(price: str) -> float:
-        if price is None:
-            return 0
-        prc = price.strip()
-        if len(prc) <= 0:
-            return 0
-        prc_split = prc.split(" ")
-        if len(prc_split) <= 0:
-            return 0
-        prc_text = prc_split[0].strip()
-        prc_text = prc_text.replace(".", "").replace(",", ".")
-        return float(prc_text)
-
     def _search(self):
-        url = self._url
+        url = self._input.url
         while True:
             crw = Crawler(url)
-
-            prices = crw.get_values_between('<td class="searchResultsPriceValue">', '</div>')
+            prices = extract_crawler_prices(crw)
             for price in prices:
-                float_price = Search._parse_price(price)
-                self._prices.append(float_price)
+                self._prices.append(price)
 
-            next_url = crw.get_last_value_between('<a href="', '" class="prevNextBut" title="Sonraki"')
+            next_url = crw.get_last_value_between('<a href="',
+                                                  '" class="prevNextBut" title="Sonraki"')
             if next_url == "":
                 return
-            url = _HOST + next_url
+            url = HOST + next_url
 
-            if self._post_sleep > 0:
-                time.sleep(self._post_sleep)
+            if self._input.post_sleep > 0:
+                time.sleep(self._input.post_sleep)
