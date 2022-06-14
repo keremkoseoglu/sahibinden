@@ -1,12 +1,9 @@
 """ Sahibinden main module """
-from sahibinden.search import Search
-
-def run_test():
-    """ Just a test """
-    search = Search("https://www.sahibinden.com/arazi-suv-pickup-nissan-qashqai/benzin/manuel?a277_max=2013&a277_min=2013&a276_min=100000&a276_max=200000")
-    for price in search.result.prices:
-        print(str(price))
-    print(search.result.price_median)
+import test
 
 if __name__ == "__main__":
-    run_test()
+    # test.regular_search()
+    # test.quick_median_single_page()
+    # test.quick_median_multi_page_no_offset()
+    # test.quick_median_multi_page_with_offset()
+    pass
